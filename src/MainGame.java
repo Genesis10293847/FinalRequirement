@@ -1,0 +1,107 @@
+
+import java.util.Random;
+import java.util.Scanner;
+import java.util.random.*;
+
+public class MainGame {
+    public static void main(String[] args) {
+
+        Scanner userInput = new Scanner(System.in);
+        GameElement Bato = new GameElement("Bato","Papel", "Gunting");
+        GameElement Gunting = new GameElement("Gunting","Bato", "Papel");
+        GameElement Papel = new GameElement("Papel", "Gunting", "Bato");
+
+        Player myPlayer = new Player("None");
+        Player Computer = new Player("None");
+
+        //-------------------------------------
+
+        while (myPlayer.isAlive()&&Computer.isAlive()){
+            System.out.print("Enter your choice(bato, gunting, papel): ");
+            String userChoice = userInput.nextLine();
+
+            System.out.println();
+            GameElement[] choices = new GameElement[]{Bato, Papel, Gunting};
+            Random computerChoice = new Random();
+            int randomIndex = computerChoice.nextInt(choices.length);
+            GameElement selectedChoice = choices[randomIndex];
+
+            System.out.println("Player chooses: "+userChoice);
+            System.out.println("Computer chooses: "+selectedChoice.getName());
+
+            boolean win;
+
+            if (userChoice.equalsIgnoreCase("Bato")){
+                win = Bato.isWin(selectedChoice);
+
+                if (win){
+                    Computer.getDamage();
+                    System.out.println("You win! Computer took damage!");
+                    System.out.println("Computer life: "+Computer.getLife());
+                    myPlayer.setAccumulatedXP(20);
+                    System.out.println("Acquired XP: "+ myPlayer.getAccumulatedXP());
+
+                } else if (userChoice.equalsIgnoreCase(selectedChoice.getName())) {
+                    System.out.println("Draw! No one took damage!");
+                }else {
+                    myPlayer.getDamage();
+                    System.out.println("You Lose! You took damage!");
+                    System.out.println("Your life: "+ myPlayer.getLife());
+                }
+            } else if (userChoice.equalsIgnoreCase(("Gunting"))) {
+                win = Gunting.isWin(selectedChoice);
+
+                if (win){
+                    Computer.getDamage();
+                    System.out.println("You win! Computer took damage!");
+                    System.out.println("Computer life: "+Computer.getLife());
+                    myPlayer.setAccumulatedXP(20);
+                    System.out.println("Acquired XP: "+ myPlayer.getAccumulatedXP());
+                } else if (userChoice.equalsIgnoreCase(selectedChoice.getName())) {
+                    System.out.println("Draw! No one took damage!");
+                }else {
+                    myPlayer.getDamage();
+                    System.out.println("You Lose! You took damage!");
+                    System.out.println("Your life: "+ myPlayer.getLife());
+                }
+            } else if (userChoice.equalsIgnoreCase(("Papel"))){
+                win = Papel.isWin(selectedChoice);
+
+                if (win){
+                    Computer.getDamage();
+                    System.out.println("You win! Computer took damage!");
+                    System.out.println("Computer life: "+Computer.getLife());
+                    myPlayer.setAccumulatedXP(20);
+                    System.out.println("Acquired XP: "+ myPlayer.getAccumulatedXP());
+                } else if (userChoice.equalsIgnoreCase(selectedChoice.getName())) {
+                    System.out.println("Draw! No one took damage!");
+                }else {
+                    myPlayer.getDamage();
+                    System.out.println("You Lose! You took damage!");
+                    System.out.println("Your life: "+ myPlayer.getLife());
+                }
+            }
+        }
+
+        //-----------------------------------------------------------
+
+
+        if (myPlayer.getLife()>0){
+            myPlayer.setXP(myPlayer.getAccumulatedXP());
+            System.out.println("You win! Your current XP: "+myPlayer.getXP());
+        }else{
+            myPlayer.setAccumulatedXP(0);
+            System.out.println("You Lose! Your current XP: "+myPlayer.getXP());
+        }
+
+
+
+
+    }
+
+
+
+
+
+}
+
