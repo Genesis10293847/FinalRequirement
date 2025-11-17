@@ -15,6 +15,7 @@ public class MainGame {
         Player Computer = new Player("None");
 
         //-------------------------------------
+        int accumulatedXP = 20;
 
         while (myPlayer.isAlive()&&Computer.isAlive()){
             System.out.print("Enter your choice(bato, gunting, papel): ");
@@ -31,6 +32,8 @@ public class MainGame {
 
             boolean win;
 
+
+
             if (userChoice.equalsIgnoreCase("Bato")){
                 win = Bato.isWin(selectedChoice);
 
@@ -38,7 +41,7 @@ public class MainGame {
                     Computer.getDamage();
                     System.out.println("You win! Computer took damage!");
                     System.out.println("Computer life: "+Computer.getLife());
-                    myPlayer.setAccumulatedXP(20);
+                    myPlayer.setAccumulatedXP(accumulatedXP);
                     System.out.println("Acquired XP: "+ myPlayer.getAccumulatedXP());
 
                 } else if (userChoice.equalsIgnoreCase(selectedChoice.getName())) {
@@ -55,7 +58,7 @@ public class MainGame {
                     Computer.getDamage();
                     System.out.println("You win! Computer took damage!");
                     System.out.println("Computer life: "+Computer.getLife());
-                    myPlayer.setAccumulatedXP(20);
+                    myPlayer.setAccumulatedXP(accumulatedXP);
                     System.out.println("Acquired XP: "+ myPlayer.getAccumulatedXP());
                 } else if (userChoice.equalsIgnoreCase(selectedChoice.getName())) {
                     System.out.println("Draw! No one took damage!");
@@ -71,7 +74,7 @@ public class MainGame {
                     Computer.getDamage();
                     System.out.println("You win! Computer took damage!");
                     System.out.println("Computer life: "+Computer.getLife());
-                    myPlayer.setAccumulatedXP(20);
+                    myPlayer.setAccumulatedXP(accumulatedXP);
                     System.out.println("Acquired XP: "+ myPlayer.getAccumulatedXP());
                 } else if (userChoice.equalsIgnoreCase(selectedChoice.getName())) {
                     System.out.println("Draw! No one took damage!");
@@ -81,6 +84,35 @@ public class MainGame {
                     System.out.println("Your life: "+ myPlayer.getLife());
                 }
             }
+
+
+            if ((myPlayer.getLife()>1||Computer.getLife()>1)&&(myPlayer.isAlive()&&Computer.isAlive())){
+                System.out.print("Would you like to double your XP for the next round? (yes/no): ");
+                    String doubleXPChoice = userInput.nextLine();
+                System.out.println();
+
+                if (doubleXPChoice.equalsIgnoreCase("yes")) {
+                    accumulatedXP*=2;
+                } else if (doubleXPChoice.equalsIgnoreCase("no")) {
+                    continue;
+                } else {
+                    System.out.println("Invalid choice. XP remains the same.");
+                }
+            }else if (myPlayer.getLife()==1||Computer.getLife()==1){
+                System.out.print("Last Round! Double or Nothing round!");
+                accumulatedXP*=2;
+                System.out.println();
+            }else{
+                break;
+            }
+
+
+
+
+
+
+
+
         }
 
         //-----------------------------------------------------------
@@ -91,6 +123,7 @@ public class MainGame {
             System.out.println("You win! Your current XP: "+myPlayer.getXP());
         }else{
             myPlayer.setAccumulatedXP(0);
+            System.out.println();
             System.out.println("You Lose! Your current XP: "+myPlayer.getXP());
         }
 
@@ -99,9 +132,7 @@ public class MainGame {
 
     }
 
-
-
-
-
 }
+
+
 
